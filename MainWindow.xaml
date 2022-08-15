@@ -1,0 +1,63 @@
+﻿<Window x:Class="Wind3Config.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModel="clr-namespace:Wind3Config.ViewModel" mc:Ignorable="d"
+        Title="风色幻想3 配置向导" Height="250" Width="400" ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Margin="0,2,0,2">
+                <GroupBox.Header>
+                    <Label>窗口 (Window)</Label>
+                </GroupBox.Header>
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Grid.Column="0" GroupName="Window" Checked="Window_FullScreenMode_Checked"
+                                 IsChecked="{Binding Path=IsFullScreenMode}">
+                        全屏 (FullScreen)
+                    </RadioButton>
+                    <RadioButton Grid.Column="1" GroupName="Window" Checked="Window_WindowMode_Checked"
+                                 IsChecked="{Binding Path=IsWindowMode}">
+                        窗口 (Window)
+                    </RadioButton>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Margin="0,2,0,2">
+                <GroupBox.Header>
+                    <Label>分辨率 (Resolution)</Label>
+                </GroupBox.Header>
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Grid.Column="0" GroupName="Resolution" Checked="Resolution_RadioButton1_Checked"
+                                 IsChecked="{Binding Path=IsResolution_1}">
+                        800x600
+                    </RadioButton>
+                    <RadioButton Grid.Column="1" GroupName="Resolution" Checked="Resolution_RadioButton2_Checked"
+                                 IsChecked="{Binding Path=IsResolution_2}">
+                        1024x768
+                    </RadioButton>
+                </Grid>
+            </GroupBox>
+            <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Name="Start" Margin="0,2,0,2">
+                开始游戏 (Start)
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

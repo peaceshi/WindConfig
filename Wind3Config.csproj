@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net35;net6.0-windows</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\Wind3.ico</ApplicationIcon>
+	<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+	<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+	<LangVersion>10.0</LangVersion>
+	<IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\wf3.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Wind3.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Assets\wf3.png" />
+  </ItemGroup>
+</Project>
