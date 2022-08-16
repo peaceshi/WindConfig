@@ -55,7 +55,7 @@
                 </Grid>
             </GroupBox>
             <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Name="Start" Margin="0,2,0,2">
+                    Name="Start" Margin="0,2,0,2" Click="Start_Click">
                 开始游戏 (Start)
             </Button>
         </Grid>

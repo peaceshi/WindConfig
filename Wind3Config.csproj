@@ -5,6 +5,7 @@
     <TargetFrameworks>net35;net6.0-windows</TargetFrameworks>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>Assets\Wind3.ico</ApplicationIcon>
 	<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
 	<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
@@ -18,6 +19,10 @@
 
   <ItemGroup>
     <Content Include="Assets\Wind3.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
   <ItemGroup>
