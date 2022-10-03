@@ -1,0 +1,4 @@
+﻿GetWindowRect
+SetWindowPos
+HWND
+RECT
