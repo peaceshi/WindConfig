@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<ApplicationIcon>Assets\Wind3.ico</ApplicationIcon>
+		<ApplicationIcon>Assets\Wind4.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Assets\wf3.png" />
 	  <None Remove="Assets\wf4.png" />
-	  <None Remove="Assets\Wind4.ico" />
+	  <None Remove="Assets\Wind3.ico" />
 	</ItemGroup>
 	<ItemGroup>
-	  <SplashScreen Include="Assets\wf3.png" />
+	  <SplashScreen Include="Assets\wf4.png" />
 	</ItemGroup>
 </Project>
