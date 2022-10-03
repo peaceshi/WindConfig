@@ -6,32 +6,33 @@ namespace Wind3Config.ViewModel;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {
-    private static bool _IsFullScreenMode = true;
+    private static bool _IsFullScreenMode;
     private static bool _IsWindowMode;
-    private static bool _IsResolution_1 = true;
+    private static bool _IsResolution_1;
     private static bool _IsResolution_2;
+    private static bool _IsCustomResolution;
 
     public MainWindowViewModel()
     {
-        if (Wind3Registry.GetIsFullscreenValue() != 0)
+        if (WindRegistry.IsFullscreen != 0)
         {
             _IsFullScreenMode = true;
-            _IsWindowMode = false;
         }
         else
         {
-            _IsFullScreenMode = false;
             _IsWindowMode = true;
         }
-        if (Wind3Registry.GetResolutionValue() == 600)
+        if (WindRegistry.CreationWidth == 800 && WindRegistry.CreationHeight == 600)
         {
             _IsResolution_1 = true;
-            _IsResolution_2 = false;
+        }
+        else if (WindRegistry.CreationWidth == 1024 && WindRegistry.CreationHeight == 768)
+        {
+            _IsResolution_2 = true;
         }
         else
         {
-            _IsResolution_1 = false;
-            _IsResolution_2 = true;
+            _IsCustomResolution = true;
         }
     }
 
@@ -74,6 +75,36 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             _IsResolution_2 = value;
             OnPropertyChanged(nameof(IsResolution_2));
+        }
+    }
+
+    public bool IsCustomResolution
+    {
+        get { return _IsCustomResolution; }
+        set
+        {
+            _IsCustomResolution = value;
+            OnPropertyChanged(nameof(IsCustomResolution));
+        }
+    }
+
+    public int CustomCreationWidth
+    {
+        get { return WindRegistry.CreationWidth; }
+        set
+        {
+            WindRegistry.CreationWidth = value;
+            OnPropertyChanged(nameof(CustomCreationWidth));
+        }
+    }
+
+    public int CustomCreationHeight
+    {
+        get { return WindRegistry.CreationHeight; }
+        set
+        {
+            WindRegistry.CreationHeight = value;
+            OnPropertyChanged(nameof(CustomCreationHeight));
         }
     }
 

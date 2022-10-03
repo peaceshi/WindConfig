@@ -1,90 +1,78 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Navigation;
 
 using Wind3Config.Model;
 
-using Application = System.Windows.Application;
-using Point = System.Windows.Point;
-
 namespace Wind3Config;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
-    private const int SWP_NOSIZE = 0x0001;
-
-    private const int SWP_NOZORDER = 0x0004;
-
-    private const int SWP_SHOWWINDOW = 0x0040;
+    private const string ProcessName = Wind.Wind3ProcessName;
 
     public MainWindow()
     {
+        WindRegistry.WindKey = Wind.Wind3RegistryKeyName;
+        WindRegistry.Version = 211;
         InitializeComponent();
     }
 
-    [DllImport("user32.dll")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
-
     private void Resolution_RadioButton1_Checked(object sender, RoutedEventArgs e)
     {
-        Wind3Registry.SetResolutionValue(800, 600);
+        WindRegistry.CreationWidth = 800;
+        WindRegistry.CreationHeight = 600;
     }
 
     private void Resolution_RadioButton2_Checked(object sender, RoutedEventArgs e)
     {
-        Wind3Registry.SetResolutionValue(1024, 768);
+        WindRegistry.CreationWidth = 1024;
+        WindRegistry.CreationHeight = 768;
     }
 
     private void Window_WindowMode_Checked(object sender, RoutedEventArgs e)
     {
-        Wind3Registry.SetIsFullscreenValue(0);
+        WindRegistry.IsFullscreen = 0;
     }
 
     private void Window_FullScreenMode_Checked(object sender, RoutedEventArgs e)
     {
-        Wind3Registry.SetIsFullscreenValue(1);
+        WindRegistry.IsFullscreen = 1;
     }
 
     private void Start_Click(object sender, RoutedEventArgs e)
     {
-        using Process Wind3Process = new();
+        if (File.Exists(ProcessName))
         {
-            Wind3Process.StartInfo.UseShellExecute = false;
-            Wind3Process.StartInfo.FileName = "WIND3.EXE";
-            Wind3Process.StartInfo.CreateNoWindow = false;
-            Wind3Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-            Wind3Process.Start();
-            if (Wind3Registry.GetIsFullscreenValue() == 0)
+            WindRegistry.Path = $"{Path.GetDirectoryName(Path.GetFullPath(ProcessName))}\\";
+            using Process WindProcess = new();
             {
-                while (Wind3Process.MainWindowHandle == IntPtr.Zero)
-                    Wind3Process.Refresh();
-                IntPtr handle = Wind3Process.MainWindowHandle;
-
-                GetWindowRect(handle, out RECT rct);
-                Rectangle screen = Screen.FromHandle(handle).Bounds;
-                Point pt = new(screen.Left + (screen.Width / 2) - ((rct.Right - rct.Left) / 2), screen.Top + (screen.Height / 2) - ((rct.Bottom - rct.Top) / 2));
-                SetWindowPos(handle, IntPtr.Zero, (int)pt.X, (int)pt.Y, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                WindProcess.StartInfo.UseShellExecute = false;
+                WindProcess.StartInfo.FileName = ProcessName;
+                WindProcess.StartInfo.CreateNoWindow = false;
+                WindProcess.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                WindProcess.Start();
+                if (WindRegistry.IsFullscreen == 0)
+                {
+                    Wind.SetWindowPosToCenter(WindProcess);
+                }
             }
         }
-        Application.Current.Shutdown();
+        else
+        {
+            MessageBox.Show($"未找到 {ProcessName} \n Can not find {ProcessName}", "警告 (Warning)");
+        }
+        App.Current.Shutdown();
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
+    private void Resolution_RadioButton3_Checked(object sender, RoutedEventArgs e)
     {
-        public int Left;        // x position of upper-left corner
-        public int Top;         // y position of upper-left corner
-        public int Right;       // x position of lower-right corner
-        public int Bottom;      // y position of lower-right corner
+        MessageBox.Show("自定义分辨率可能产生预期之外的错误. 甚至损坏你的硬件.\nCustom resolutions can produce unexpected errors. Even damage your hardware.", "警告 (Warning)");
+    }
+
+    private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+    {
+        Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+        e.Handled = true;
     }
 }

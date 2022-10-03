@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModel="clr-namespace:Wind3Config.ViewModel" mc:Ignorable="d"
-        Title="风色幻想3 配置向导" Height="250" Width="400" ResizeMode="CanMinimize"
+        Title="风色幻想3 配置向导" Height="300" Width="400" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
@@ -15,12 +15,13 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Margin="0,2,0,2">
                 <GroupBox.Header>
                     <Label>窗口 (Window)</Label>
                 </GroupBox.Header>
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="4,2,4,2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -39,8 +40,9 @@
                 <GroupBox.Header>
                     <Label>分辨率 (Resolution)</Label>
                 </GroupBox.Header>
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="4,2,4,2">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -52,12 +54,71 @@
                                  IsChecked="{Binding Path=IsResolution_2}">
                         1024x768
                     </RadioButton>
+                    <RadioButton Grid.Column="2" GroupName="Resolution" Checked="Resolution_RadioButton3_Checked"
+                                 IsChecked="{Binding Path=IsCustomResolution}">
+                        自定义 (Custom)
+                    </RadioButton>
                 </Grid>
             </GroupBox>
-            <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Name="Start" Margin="0,2,0,2" Click="Start_Click">
+            <Grid Grid.Row="2" Margin="0,2,0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.ColumnSpan="2" Margin="0,2,0,2"
+                          IsEnabled="{Binding Path=IsCustomResolution}">
+                    <GroupBox.Header>
+                        <Label>自定义分辨率 (Custom Resolution)</Label>
+                    </GroupBox.Header>
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="2,0,2,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="2" VerticalAlignment="Center"
+                              HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Margin="4,0,4,0">宽 (Width):</TextBlock>
+                            <TextBox Grid.Column="1">
+                                <TextBox.Text>
+                                    <Binding Path="CustomCreationWidth" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <ExceptionValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="2" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Margin="4,0,4,0">高 (Height):</TextBlock>
+                            <TextBox Grid.Column="1">
+                                <Binding Path="CustomCreationHeight" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <Button Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Name="Start" Click="Start_Click">
                 开始游戏 (Start)
             </Button>
         </Grid>
+        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
+            <Hyperlink Cursor="Hand" NavigateUri="https://github.com/peaceshi/Wind3/"
+                       RequestNavigate="Hyperlink_RequestNavigate">
+                <Run Text=" V2.1" />
+            </Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>
