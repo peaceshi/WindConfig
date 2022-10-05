@@ -32,8 +32,8 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: Wind3Config
-        path: .\bin\Wind3Config\Release\net35\
+        path: .\bin\Wind3Config\Release\net35\\**\\*
     - uses: actions/upload-artifact@v3
       with:
         name: Wind4Config
-        path: .\bin\Wind4Config\Release\net35\
+        path: .\bin\Wind4Config\Release\net35\\**\\*
