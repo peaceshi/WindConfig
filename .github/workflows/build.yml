@@ -1,0 +1,39 @@
+name: build-sfx
+on: [push, pull_request]
+jobs:
+  build-wind3:
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v3
+    - name: init, restore, build
+      working-directory: ${{github.workspace}}
+      shell: cmd
+      run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64
+          nuget restore Wind3Config.sln
+          devenv Wind3Config.sln /Rebuild Release
+
+  build-wind4:
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v3
+    - name: init, restore, build
+      working-directory: ${{github.workspace}}
+      shell: cmd
+      run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64
+          nuget restore Wind4Config.sln
+          devenv Wind4Config.sln /Rebuild Release
+
+  upload:
+    runs-on: windows-2022
+    needs: [build-wind3, build-wind4]
+    steps:
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Wind3Config
+        path: .\bin\Wind3Config\Release\net35\
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Wind4Config
+        path: .\bin\Wind4Config\Release\net35\
