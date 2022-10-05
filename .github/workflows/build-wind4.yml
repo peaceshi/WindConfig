@@ -5,17 +5,10 @@ jobs:
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v3
-
-    - name: cache
-      uses: actions/cache@v3
+    - uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-
-    - name: init
-      working-directory: ${{github.workspace}}
-      shell: cmd
-      run: call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64
 
     - name: restore
       working-directory: ${{github.workspace}}
@@ -25,7 +18,9 @@ jobs:
     - name: build
       working-directory: ${{github.workspace}}
       shell: cmd
-      run: devenv Wind4Config.sln /Rebuild Release
+      run: |
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64
+        devenv Wind4Config.sln /Rebuild Release
 
     - name: upload
       uses: actions/upload-artifact@v3
