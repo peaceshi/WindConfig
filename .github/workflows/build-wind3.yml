@@ -5,9 +5,7 @@ jobs:
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v3
-
-    - name: cache
-      uses: actions/cache@v3
+    - uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -27,8 +25,7 @@ jobs:
       shell: cmd
       run: devenv Wind3Config.sln /Rebuild Release
 
-    - name: upload
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: Wind3Config
         path: bin\Wind3Config\Release\net35\
