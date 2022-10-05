@@ -1,0 +1,35 @@
+name: build-wind3
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+    - name: checkout
+    - uses: actions/checkout@v3
+
+    - name: cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+
+    - name: init
+      working-directory: ${{github.workspace}}
+      shell: cmd
+      run: call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64
+
+    - name: restore
+      working-directory: ${{github.workspace}}
+      shell: cmd
+      run: nuget restore Wind3Config.sln -LockedMode
+
+    - name: build
+      working-directory: ${{github.workspace}}
+      shell: cmd
+      run: devenv Wind3Config.sln /Rebuild Release
+
+    - name: upload
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Wind3Config
+        path: bin\Wind3Config\Release\net35\
