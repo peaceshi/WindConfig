@@ -1,0 +1,21 @@
+name: build-wind3
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+    - uses: microsoft/setup-msbuild@v1.1
+    - name: build
+      working-directory: ${{github.workspace}}
+      shell: cmd
+      run: msbuild -m -t:restore;rebuild -p:RestoreLockedMode=true;Configuration=Release Wind3Config.sln
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Wind3Config
+        path: bin\Wind3Config\Release\net35\
