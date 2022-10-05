@@ -5,7 +5,7 @@ jobs:
     runs-on: windows-2022
     steps:
     - name: checkout
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: cache
       uses: actions/cache@v3
@@ -29,7 +29,7 @@ jobs:
       run: devenv Wind4Config.sln /Rebuild Release
 
     - name: upload
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: Wind4Config
         path: bin\Wind4Config\Release\net35\
