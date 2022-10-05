@@ -10,17 +10,11 @@ jobs:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
 
-    - name: restore
-      working-directory: ${{github.workspace}}
-      shell: cmd
-      run: nuget restore Wind4Config.sln -LockedMode
-
+    - uses: microsoft/setup-msbuild@v1.1
     - name: build
       working-directory: ${{github.workspace}}
       shell: cmd
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64
-        devenv Wind4Config.sln /Rebuild Release
+      run: msbuild -m -t:restore;rebuild -p:RestoreLockedMode=true;Configuration=Release Wind4Config.sln
 
     - name: upload
       uses: actions/upload-artifact@v3
