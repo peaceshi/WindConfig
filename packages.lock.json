@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETFramework,Version=v3.5": {
+      "Microsoft.Windows.CsWin32": {
+        "type": "Direct",
+        "requested": "[0.2.63-beta, )",
+        "resolved": "0.2.63-beta",
+        "contentHash": "W820x0FXd8kkaVjuVrG5bDZ3ZuqFZOJAOa6I0nCYsD8pbBr03inIbaIonLam0OoTQVQxPeAst+UQmABCG/UvEw==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.Win32Docs": "0.1.7-alpha",
+          "Microsoft.Windows.SDK.Win32Metadata": "33.0.18-preview"
+        }
+      },
+      "Microsoft.Windows.SDK.Win32Docs": {
+        "type": "Transitive",
+        "resolved": "0.1.7-alpha",
+        "contentHash": "+8ygOfBME88Sq75zMopFfqCdxBxZoKDlizPK6iYxzSGf6j51rd9ISNJ20UKfOSr746tgn9GNyVI+jc0JXfnuZA=="
+      },
+      "Microsoft.Windows.SDK.Win32Metadata": {
+        "type": "Transitive",
+        "resolved": "33.0.18-preview",
+        "contentHash": "faTDQFsW+EWUUg7UtZaQtL6ftRnLp+HBYZ9Ku5ToTE60O9dUxygb42eVUKEEWRIeL9oRRRrjkbNGl8ZzhMQUkQ=="
+      }
+    },
+    "net6.0-windows7.0": {
+      "Microsoft.Windows.CsWin32": {
+        "type": "Direct",
+        "requested": "[0.2.63-beta, )",
+        "resolved": "0.2.63-beta",
+        "contentHash": "W820x0FXd8kkaVjuVrG5bDZ3ZuqFZOJAOa6I0nCYsD8pbBr03inIbaIonLam0OoTQVQxPeAst+UQmABCG/UvEw==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.Win32Docs": "0.1.7-alpha",
+          "Microsoft.Windows.SDK.Win32Metadata": "33.0.18-preview",
+          "System.Memory": "4.5.4"
+        }
+      },
+      "Microsoft.Windows.SDK.Win32Docs": {
+        "type": "Transitive",
+        "resolved": "0.1.7-alpha",
+        "contentHash": "+8ygOfBME88Sq75zMopFfqCdxBxZoKDlizPK6iYxzSGf6j51rd9ISNJ20UKfOSr746tgn9GNyVI+jc0JXfnuZA=="
+      },
+      "Microsoft.Windows.SDK.Win32Metadata": {
+        "type": "Transitive",
+        "resolved": "33.0.18-preview",
+        "contentHash": "faTDQFsW+EWUUg7UtZaQtL6ftRnLp+HBYZ9Ku5ToTE60O9dUxygb42eVUKEEWRIeL9oRRRrjkbNGl8ZzhMQUkQ=="
+      },
+      "System.Memory": {
+        "type": "Transitive",
+        "resolved": "4.5.4",
+        "contentHash": "1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw=="
+      }
+    }
+  }
+}
