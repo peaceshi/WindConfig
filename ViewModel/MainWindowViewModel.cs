@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-using Wind3Config.Model;
+using WindConfig.Model;
 
-namespace Wind3Config.ViewModel;
+namespace WindConfig.ViewModel;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {

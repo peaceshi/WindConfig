@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 
-namespace Wind3Config.Model;
+namespace WindConfig.Model;
 
 public static class WindRegistry
 {

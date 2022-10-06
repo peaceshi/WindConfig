@@ -8,7 +8,7 @@ using Windows.Win32.Foundation;
 
 using static Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS;
 
-namespace Wind3Config.Model;
+namespace WindConfig.Model;
 
 public static class Wind
 {
@@ -16,6 +16,8 @@ public static class Wind
     public const string Wind4ProcessName = "WIND4.EXE";
     public const string Wind3RegistryKeyName = "Wind3";
     public const string Wind4RegistryKeyName = "Wind4";
+    public const string Wind3ConfigTitleName = "风色幻想3 配置向导";
+    public const string Wind4ConfigTitleName = "风色幻想4 配置向导";
 
     public static void SetWindowPosToCenter(Process process)
     {
