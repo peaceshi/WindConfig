@@ -1,10 +1,10 @@
-﻿<Window x:Class="Wind3Config.MainWindow"
+﻿<Window x:Class="WindConfig.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModel="clr-namespace:Wind3Config.ViewModel" mc:Ignorable="d"
-        Title="风色幻想3 配置向导" Height="300" Width="400" ResizeMode="CanMinimize"
+        xmlns:ViewModel="clr-namespace:WindConfig.ViewModel" mc:Ignorable="d"
+        Title="WindConfig" Height="300" Width="400" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
