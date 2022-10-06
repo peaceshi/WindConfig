@@ -3,29 +3,32 @@ using System.IO;
 using System.Windows;
 using System.Windows.Navigation;
 
-using Wind3Config.Model;
+using WindConfig.Model;
 
-namespace Wind3Config;
+namespace WindConfig;
 
 public partial class MainWindow : Window
 {
-    private const string ProcessName = Wind.Wind3ProcessName;
+    private readonly string ProcessName = string.Empty;
+    private bool IsCustomResolution;
 
-    public MainWindow()
+    public MainWindow(string title, string processName)
     {
-        WindRegistry.WindKey = Wind.Wind3RegistryKeyName;
-        WindRegistry.Version = 211;
         InitializeComponent();
+        Title = title;
+        ProcessName = processName;
     }
 
     private void Resolution_RadioButton1_Checked(object sender, RoutedEventArgs e)
     {
+        IsCustomResolution = false;
         WindRegistry.CreationWidth = 800;
         WindRegistry.CreationHeight = 600;
     }
 
     private void Resolution_RadioButton2_Checked(object sender, RoutedEventArgs e)
     {
+        IsCustomResolution = false;
         WindRegistry.CreationWidth = 1024;
         WindRegistry.CreationHeight = 768;
     }
@@ -42,7 +45,18 @@ public partial class MainWindow : Window
 
     private void Start_Click(object sender, RoutedEventArgs e)
     {
-        if (File.Exists(ProcessName))
+        MessageBoxResult CustomResolutionResult = MessageBoxResult.Cancel;
+        if (IsCustomResolution)
+        {
+            const string caption = "警告 (Warning)";
+            const string message = "自定义分辨率可能产生预期之外的错误. 甚至损坏你的硬件.\nCustom resolutions can produce unexpected errors. Even damage your hardware.";
+            const MessageBoxResult defaultResult = MessageBoxResult.Cancel;
+            CustomResolutionResult = MessageBox.Show(message, caption, MessageBoxButton.OKCancel, MessageBoxImage.Warning, defaultResult);
+        }
+        //1. File must exists.
+        //2. File exists with IsCustomResolution == true. CustomResolutionResult == MessageBoxResult.OK must be IsCustomResolution == true
+        //3. File exists with !IsCustomResolution
+        if (File.Exists(ProcessName) && (CustomResolutionResult == MessageBoxResult.OK || !IsCustomResolution))
         {
             WindRegistry.Path = $"{Path.GetDirectoryName(Path.GetFullPath(ProcessName))}\\";
             using Process WindProcess = new();
@@ -57,17 +71,18 @@ public partial class MainWindow : Window
                     Wind.SetWindowPosToCenter(WindProcess);
                 }
             }
+            Application.Current.Shutdown();
         }
-        else
+        // if CustomResolutionResult is MessageBoxResult.Cancel, nothing needs to do.
+        else if (!File.Exists(ProcessName))
         {
             MessageBox.Show($"未找到 {ProcessName} \n Can not find {ProcessName}", "警告 (Warning)");
         }
-        App.Current.Shutdown();
     }
 
     private void Resolution_RadioButton3_Checked(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("自定义分辨率可能产生预期之外的错误. 甚至损坏你的硬件.\nCustom resolutions can produce unexpected errors. Even damage your hardware.", "警告 (Warning)");
+        IsCustomResolution = true;
     }
 
     private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
