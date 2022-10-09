@@ -10,7 +10,6 @@ namespace WindConfig;
 public partial class MainWindow : Window
 {
     private readonly string ProcessName = string.Empty;
-    private bool IsCustomResolution;
 
     public MainWindow(string title, string processName)
     {
@@ -21,14 +20,12 @@ public partial class MainWindow : Window
 
     private void Resolution_RadioButton1_Checked(object sender, RoutedEventArgs e)
     {
-        IsCustomResolution = false;
         WindRegistry.CreationWidth = 800;
         WindRegistry.CreationHeight = 600;
     }
 
     private void Resolution_RadioButton2_Checked(object sender, RoutedEventArgs e)
     {
-        IsCustomResolution = false;
         WindRegistry.CreationWidth = 1024;
         WindRegistry.CreationHeight = 768;
     }
@@ -46,7 +43,7 @@ public partial class MainWindow : Window
     private void Start_Click(object sender, RoutedEventArgs e)
     {
         MessageBoxResult CustomResolutionResult = MessageBoxResult.Cancel;
-        if (IsCustomResolution)
+        if (CustomResolution.IsEnabled)
         {
             const string caption = "警告 (Warning)";
             const string message = "自定义分辨率可能产生预期之外的错误. 甚至损坏你的硬件.\nCustom resolutions can produce unexpected errors. Even damage your hardware.";
@@ -54,9 +51,9 @@ public partial class MainWindow : Window
             CustomResolutionResult = MessageBox.Show(message, caption, MessageBoxButton.OKCancel, MessageBoxImage.Warning, defaultResult);
         }
         //1. File must exists.
-        //2. File exists with IsCustomResolution == true. CustomResolutionResult == MessageBoxResult.OK must be IsCustomResolution == true
-        //3. File exists with !IsCustomResolution
-        if (File.Exists(ProcessName) && (CustomResolutionResult == MessageBoxResult.OK || !IsCustomResolution))
+        //2. File exists with IsCustomResolution == true. CustomResolutionResult == MessageBoxResult.OK must be IsCustomResolution == true.
+        //3. File exists with !IsCustomResolution.
+        if (File.Exists(ProcessName) && (CustomResolutionResult == MessageBoxResult.OK || !CustomResolution.IsEnabled))
         {
             WindRegistry.Path = $"{Path.GetDirectoryName(Path.GetFullPath(ProcessName))}\\";
             using Process WindProcess = new();
@@ -78,11 +75,6 @@ public partial class MainWindow : Window
         {
             MessageBox.Show($"未找到 {ProcessName} \n Can not find {ProcessName}", "警告 (Warning)");
         }
-    }
-
-    private void Resolution_RadioButton3_Checked(object sender, RoutedEventArgs e)
-    {
-        IsCustomResolution = true;
     }
 
     private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
