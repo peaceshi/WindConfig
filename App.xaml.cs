@@ -12,21 +12,21 @@ public partial class App : Application
 {
     public App()
     {
-        string Title = string.Empty;
+        string Title = Wind.DefaultConfigTitleName;
         string ProcessName = string.Empty;
         if (File.Exists(Wind.Wind3ProcessName))
         {
             Title = Wind.Wind3ConfigTitleName;
             ProcessName = Wind.Wind3ProcessName;
             WindRegistry.WindKey = Wind.Wind3RegistryKeyName;
-            WindRegistry.Version = 211;
+            WindRegistry.Version = Wind.Wind3Version;
         }
         else if (File.Exists(Wind.Wind4ProcessName))
         {
             Title = Wind.Wind4ConfigTitleName;
             ProcessName = Wind.Wind4ProcessName;
             WindRegistry.WindKey = Wind.Wind4RegistryKeyName;
-            WindRegistry.Version = 110;
+            WindRegistry.Version = Wind.Wind4Version;
         }
         //else
         //{
