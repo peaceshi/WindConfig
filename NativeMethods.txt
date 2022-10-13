@@ -1,4 +1,5 @@
 ﻿GetWindowRect
 SetWindowPos
+FlashWindow
 HWND
 RECT
