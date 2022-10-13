@@ -3,9 +3,19 @@
 		<ApplicationIcon>Assets\Wind3.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="bin\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <None Remove="bin\**" />
+	  <Page Remove="bin\**" />
+	</ItemGroup>
+	<ItemGroup>
 	  <None Remove="Assets\wf3.png" />
 	  <None Remove="Assets\wf4.png" />
 	  <None Remove="Assets\Wind4.ico" />
+	  <None Remove="Resources\FAQ.html" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\FAQ.html" />
 	</ItemGroup>
 	<ItemGroup>
 	  <SplashScreen Include="Assets\wf3.png" />
