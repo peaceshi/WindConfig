@@ -5,9 +5,10 @@ namespace WindConfig.Model;
 public static class WindRegistry
 {
     private const string HKCU = "HKEY_CURRENT_USER";
+    private const string _LastKey = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Applets\\Regedit";
 
     //211
-    private const int defaultVersion = 0xd3;
+    private const int defaultVersion = 0x0;
 
     //800
     private const int defaultCreationWidth = 0x320;
@@ -24,6 +25,11 @@ public static class WindRegistry
     {
         get => (int)(Registry.GetValue(_WindKey, Key.CreationHeight, defaultValue: defaultCreationHeight) ?? defaultCreationHeight);
         set => Registry.SetValue(_WindKey, Key.CreationHeight, value, RegistryValueKind.DWord);
+    }
+
+    public static string LastKey
+    {
+        set => Registry.SetValue(_LastKey, "LastKey", value, RegistryValueKind.String);
     }
 
     public static int CreationWidth
