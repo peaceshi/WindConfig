@@ -113,15 +113,32 @@
                     </Grid>
                 </GroupBox>
             </Grid>
-            <Button Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Name="Start" Click="Start_Click">
-                开始游戏 (Start)
-            </Button>
+            <Grid Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  Margin="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Click="Registry_Click">
+                    注册表 (Registry)
+                </Button>
+                <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Click="Start_Click">
+                    开始游戏 (Start)
+                </Button>
+                <Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Name="Start" Click="FAQ_Click">
+                    常见问题 (FAQ)
+                </Button>
+            </Grid>
         </Grid>
         <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
-            <Hyperlink Cursor="Hand" NavigateUri="https://github.com/peaceshi/Wind3/"
+            <Hyperlink Name="CheckUpdateLink" Cursor="Hand"
+                       NavigateUri="https://github.com/peaceshi/Wind3/"
                        RequestNavigate="Hyperlink_RequestNavigate">
-                <Run Text=" V2.1" />
+                <Run Text="更新 (Update)" />
             </Hyperlink>
         </TextBlock>
     </Grid>

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Navigation;
 
 using WindConfig.Model;
+using WindConfig.View;
 
 namespace WindConfig;
 
@@ -20,24 +21,36 @@ public partial class MainWindow : Window
 
     private void Resolution_RadioButton1_Checked(object sender, RoutedEventArgs e)
     {
-        WindRegistry.CreationWidth = 800;
-        WindRegistry.CreationHeight = 600;
+        if (ProcessName?.Length != 0)
+        {
+            WindRegistry.CreationWidth = 800;
+            WindRegistry.CreationHeight = 600;
+        }
     }
 
     private void Resolution_RadioButton2_Checked(object sender, RoutedEventArgs e)
     {
-        WindRegistry.CreationWidth = 1024;
-        WindRegistry.CreationHeight = 768;
+        if (ProcessName?.Length != 0)
+        {
+            WindRegistry.CreationWidth = 1024;
+            WindRegistry.CreationHeight = 768;
+        }
     }
 
     private void Window_WindowMode_Checked(object sender, RoutedEventArgs e)
     {
-        WindRegistry.IsFullscreen = 0;
+        if (ProcessName?.Length != 0)
+        {
+            WindRegistry.IsFullscreen = 0;
+        }
     }
 
     private void Window_FullScreenMode_Checked(object sender, RoutedEventArgs e)
     {
-        WindRegistry.IsFullscreen = 1;
+        if (ProcessName?.Length != 0)
+        {
+            WindRegistry.IsFullscreen = 1;
+        }
     }
 
     private void Start_Click(object sender, RoutedEventArgs e)
@@ -45,10 +58,7 @@ public partial class MainWindow : Window
         MessageBoxResult CustomResolutionResult = MessageBoxResult.Cancel;
         if (CustomResolution.IsEnabled)
         {
-            const string caption = "警告 (Warning)";
-            const string message = "自定义分辨率可能产生预期之外的错误. 甚至损坏你的硬件.\nCustom resolutions can produce unexpected errors. Even damage your hardware.";
-            const MessageBoxResult defaultResult = MessageBoxResult.Cancel;
-            CustomResolutionResult = MessageBox.Show(message, caption, MessageBoxButton.OKCancel, MessageBoxImage.Warning, defaultResult);
+            CustomResolutionResult = Wind.ShowCustomResolutionWarningMessage();
         }
         //1. File must exists.
         //2. File exists with IsCustomResolution == true. CustomResolutionResult == MessageBoxResult.OK must be IsCustomResolution == true.
@@ -73,7 +83,7 @@ public partial class MainWindow : Window
         // if CustomResolutionResult is MessageBoxResult.Cancel, nothing needs to do.
         else if (!File.Exists(ProcessName))
         {
-            MessageBox.Show($"未找到 {ProcessName} \n Can not find {ProcessName}", "警告 (Warning)");
+            Wind.ShowProcessNotFoundWarningMessage(ProcessName);
         }
     }
 
@@ -81,5 +91,34 @@ public partial class MainWindow : Window
     {
         Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
         e.Handled = true;
+    }
+
+    private void Registry_Click(object sender, RoutedEventArgs e)
+    {
+        if (ProcessName?.Length == 0)
+        {
+            Wind.ShowProcessNotFoundWarningMessage(ProcessName);
+        }
+        else
+        {
+            WindRegistry.LastKey = WindRegistry.WindKey;
+            using Process Regedit = new();
+            {
+                Regedit.StartInfo.FileName = "regedit";
+                Regedit.StartInfo.UseShellExecute = true;
+                Regedit.StartInfo.Verb = "runas";
+                Regedit.Start();
+            }
+        }
+    }
+
+    private void FAQ_Click(object sender, RoutedEventArgs e)
+    {
+        Window FAQ = new FAQ()
+        {
+            Owner = this
+        };
+
+        FAQ.ShowDialog();
     }
 }
